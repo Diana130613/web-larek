@@ -50,4 +50,27 @@ export class Form<T> extends View<IFormState> {
 		Object.assign(this, inputs);
 		return this.container;
 	}
+	
+	// Метод для валидации формы
+    protected validateForm(): boolean {
+        const fields = this.container.querySelectorAll('input');
+        let isValid = true;
+
+        fields.forEach((field) => {
+            if (!field.value.trim()) {
+                field.classList.add('error');
+                isValid = false;
+            } else {
+                field.classList.remove('error');
+            }
+        });
+
+        if (!isValid) {
+            this.errors = 'Заполните все обязательные поля';
+        } else {
+            this.errors = '';
+        }
+
+        return isValid;
+    }
 }
